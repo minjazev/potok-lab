@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { faTelegram } from '@fortawesome/free-brands-svg-icons';
-import ReactDOM from 'react-dom';
 
 // Mapping for permissions to Russian names
 const PERMISSION_LABELS: Record<string, string> = {
@@ -19,8 +18,6 @@ const PERMISSION_LABELS: Record<string, string> = {
 export default function UserDropdown() {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipTop, setTooltipTop] = useState(0);
   const [showPermissions, setShowPermissions] = useState(false);
   const navigate = useNavigate();
 

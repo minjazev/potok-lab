@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { n8nService } from '../services/n8nService';
 import { N8nWorkflow } from '../types/n8n';
-import { ListIcon, PlugInIcon, GroupIcon, GridIcon, FolderIcon, CheckCircleIcon, AlertIcon, TableIcon, PieChartIcon, TaskIcon, InfoIcon } from '../icons';
+import { ListIcon, PlugInIcon, GroupIcon, GridIcon, FolderIcon, CheckCircleIcon, PieChartIcon, TaskIcon } from '../icons';
 import { EditScheduleModal } from '../components/workflow/EditScheduleModal';
 import { useModal } from '../hooks/useModal';
 import Button from '../components/ui/button/Button';
@@ -39,7 +39,6 @@ const Workflow: React.FC<WorkflowProps> = ({ category, tag, title, description }
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedWorkflow, setSelectedWorkflow] = useState<N8nWorkflow | null>(null);
-  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleData | null>(null);
   const [scheduleLoading, setScheduleLoading] = useState(false);
   const [workflowSchedules, setWorkflowSchedules] = useState<Record<string, ScheduleData[]>>({});
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -239,8 +238,6 @@ const Workflow: React.FC<WorkflowProps> = ({ category, tag, title, description }
       console.log(`User '${user?.name}' is opening edit modal for workflow '${workflow.name}' (${workflow.id})`);
       setScheduleLoading(true);
       setSelectedWorkflow(workflow);
-      const allSchedules = extractAllSchedulesFromWorkflow(workflow);
-      setSelectedSchedule(allSchedules[0] || null); // для модалки оставим первый, но можно расширить
       openModal();
     } catch (err) {
       setError('Ошибка при получении расписания воркфлоу: ' + (err as Error).message);
@@ -281,27 +278,6 @@ const Workflow: React.FC<WorkflowProps> = ({ category, tag, title, description }
       setTimeout(() => setNotification(null), 4000);
       throw new Error('Ошибка при сохранении расписания: ' + (err as Error).message);
     }
-  };
-
-  // Функция для форматирования массива расписаний
-  const formatSchedules = (schedules: ScheduleData[] | null | undefined) => {
-    if (!schedules || schedules.length === 0) return 'Не настроено';
-    const days = {
-      '0': 'Воскресенье',
-      '1': 'Понедельник',
-      '2': 'Вторник',
-      '3': 'Среда',
-      '4': 'Четверг',
-      '5': 'Пятница',
-      '6': 'Суббота',
-    };
-    return (
-      <ul className="list-disc ml-4">
-        {schedules.map((sch, idx) => (
-          <li key={idx}>{days[sch.dayOfWeek as keyof typeof days] || 'Неизвестно'}, {sch.hour}:{sch.minute}</li>
-        ))}
-      </ul>
-    );
   };
 
   const handleAuthSubmit = (e: React.FormEvent) => {

@@ -8,7 +8,6 @@ import {
   HorizontaLDots,
   ListIcon,
   PlugInIcon,
-  TaskIcon,
   BoxCubeIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";

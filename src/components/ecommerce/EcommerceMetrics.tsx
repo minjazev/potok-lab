@@ -1,10 +1,7 @@
 import {
-  ArrowDownIcon,
-  ArrowUpIcon,
   BoxIconLine,
   GroupIcon,
 } from "../../icons";
-import Badge from "../ui/badge/Badge";
 
 interface EcommerceMetricsProps {
   loginCount: number;

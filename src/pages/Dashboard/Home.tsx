@@ -1,37 +1,15 @@
-import { useEffect, useState } from "react";
-import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
-import MonthlySalesChart from "../../components/ecommerce/MonthlySalesChart";
-import StatisticsChart from "../../components/ecommerce/StatisticsChart";
-import MonthlyTarget from "../../components/ecommerce/MonthlyTarget";
-import RecentOrders from "../../components/ecommerce/RecentOrders";
-import DemographicCard from "../../components/ecommerce/DemographicCard";
+import { useEffect } from "react";
 import PageMeta from "../../components/common/PageMeta";
-import PageBreadcrumb from "../../components/common/PageBreadCrumb";
-import * as Icons from "../../icons";
+import * as Icons from '../../icons';
 
 export default function Home() {
-  const [loginCount, setLoginCount] = useState(0);
-  const [authCount, setAuthCount] = useState(0);
-
   useEffect(() => {
     // Function to update state from localStorage
     const updateMetrics = () => {
       // Get login count
-      const storedLoginCount = localStorage.getItem('login_count');
-      setLoginCount(storedLoginCount ? parseInt(storedLoginCount, 10) : 0);
-
+      // const storedLoginCount = localStorage.getItem('login_count');
       // Get auth count
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        try {
-          const user = JSON.parse(storedUser);
-          setAuthCount(user.permissions ? user.permissions.length : 0);
-        } catch (e) {
-          setAuthCount(0);
-        }
-      } else {
-        setAuthCount(0);
-      }
+      // const storedUser = localStorage.getItem('user');
     };
 
     // Initial update
